@@ -1,2 +1,2 @@
 # hierarchical_clustering
-Linux command line hierarchical clustering using c++
+Linux command line hierarchical clustering utility using c++
