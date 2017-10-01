@@ -7,20 +7,29 @@ namespace HCLUST
     class Vector
     {
         private:
-            int length=0;
             double * cords=NULL;
             long ID=0;
+            int length=0;
         public:
+            static long num_vectors;
             explicit Vector();
             Vector(const Vector &);
             Vector(int len,double * c, long id=0);
             ~Vector();
+            Vector & operator=(const Vector & v2); 
             Vector operator+(const Vector & v2) const; 
             Vector operator-(const Vector & v2) const; 
             Vector operator-() const;
+            Vector operator*(double m) const;
+            double operator[](int j) const{return cords[j];};
+            int get_length() const{return length;};
             double mode() const;
+            void changeID(long id);
             //friends
             friend std::ostream & operator<<(std::ostream & os,const Vector & v); 
+            friend Vector operator*(double m, const Vector & v){
+                return v*m;
+            }            
     };//class def
 
     class Cluster
@@ -37,10 +46,11 @@ namespace HCLUST
             explicit Cluster(Vector & v1);
             Cluster(const Cluster & c);
             ~Cluster();
-            Cluster & operator=(const Cluster & c2);
-            Cluster operator+(const Cluster & c2) const;//combine clusters
+            Cluster operator=(const Cluster & c2);
+            Cluster operator+(const Cluster & c2) ;//combine clusters
             void add_node(Vector & v);
             void update_centroid();
+            void show_centroid();
             //friends
             friend std::ostream & operator<<(std::ostream & os, const Cluster & c);//show nodes
     };
