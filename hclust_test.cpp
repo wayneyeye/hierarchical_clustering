@@ -5,6 +5,7 @@ using std::cout;
 using std::endl;
 using HCLUST::Vector;
 using HCLUST::Cluster;
+using HCLUST::Hclustering;
 int main(){
     {
     //Test of create vectors
@@ -39,6 +40,14 @@ int main(){
     cout<<"c3: "<<c3;
     cout<<"c1+c2: "<<c1+c2;
     cout<<"number of vectors: "<<Vector::num_vectors<<endl;
+    //Test of create Hcluster
+    cout<<endl<<"Test of Hclustering:"<<endl<<endl;
+    Hclustering hc=Hclustering();
+    hc.add_pair(&c1,&c2);
+    hc.add_pair(&c1,&c2);
+    hc.add_pair(&c1,&c2);
+    hc.add_pair(&c1,&c2);
+    hc.add_pair(&c1,&c2);
     }
 
     return 0;

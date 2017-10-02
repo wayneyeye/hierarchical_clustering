@@ -255,4 +255,55 @@ namespace HCLUST{
         cout<<"End of Cluster "<<c.cluster_name<<endl<<endl;
     }
 //END of CLASS Cluster
+//CLASS Hclustering
+    Hclustering::Hclustering(){};
+    Hclustering::~Hclustering(){
+        //clean up pairs
+        Pair * temp=front;
+        while (temp!=NULL){
+            Pair * temp_t=temp;
+            temp=temp->p_next;
+            //cout<<"Delete Cluster a:"<<*(temp_t->a);
+            //cout<<"Delete Cluster b:"<<*(temp_t->b);
+            //cout<<"Delete Distance a to b:"<<temp_t->distance;
+            delete temp_t;
+        }
+        //clean up Cluster[]
+        //delete [] cluster_array;
+    };
+    void Hclustering::add_pair_to_end(Cluster * a, Cluster * b){
+       Pair * add=new Pair;
+       if(rear!=NULL)
+           rear->p_next=add;
+       rear=add;
+       rear->a=a;
+       rear->b=b;
+       rear->distance=(a->centroid-b->centroid).mode();
+       //cout<<"pair added, Distance= "<<rear->distance<<endl;
+       if(front==NULL){
+            front=rear;
+       } 
+    }
+    void Hclustering::add_pair(Cluster * a, Cluster * b){
+        Pair * add=new Pair;
+        add->a=a;
+        add->b=b;
+        add->distance=(a->centroid-b->centroid).mode();
+        Pair * temp=front;
+        Pair * temp_lag=temp;
+        while(temp!=NULL){
+            if(add->distance<=temp->distance){
+                add->p_next=temp;
+                temp_lag->p_next=add;
+         //       cout<<"pair added, Distance= "<<add->distance<<endl;
+                break;
+            }
+            //go to next pair
+            temp_lag=temp;
+            temp=temp->p_next;
+        }
+        if(temp==NULL)
+            add_pair_to_end(a,b);
+    }
+//END of CLASS Hclustering
 }//end namespace HCLUST 

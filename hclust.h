@@ -39,9 +39,9 @@ namespace HCLUST
             Node * front=NULL;
             Node * rear=NULL;
             std::string cluster_name="Default";
-            Vector centroid;
             long num_nodes;
         public:
+            Vector centroid;
             explicit Cluster();
             explicit Cluster(Vector & v1);
             Cluster(const Cluster & c);
@@ -53,6 +53,26 @@ namespace HCLUST
             void show_centroid();
             //friends
             friend std::ostream & operator<<(std::ostream & os, const Cluster & c);//show nodes
+    };
+     
+    class Hclustering
+    {
+        private:
+            struct Pair {
+                Pair * p_next=NULL;
+                Cluster * a=NULL;
+                Cluster * b=NULL;
+                double distance;
+            };
+            Pair * front=NULL;
+            Pair * rear=NULL;
+      
+        public:
+            explicit Hclustering();
+            ~Hclustering();
+            void add_pair_to_end(Cluster * a, Cluster * b);
+            void add_pair(Cluster * a, Cluster * b);
+            Pair pop_pair();
     };
 }//end namespace HCLUST
 #endif
